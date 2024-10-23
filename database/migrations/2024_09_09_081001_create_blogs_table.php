@@ -18,7 +18,12 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->longText('description')->nullable();
             $table->longText('priority')->nullable();
-            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('category_id')->constrained('categories'); 
+            $table->string('meta_title')->nullable();
+            $table->longText('meta_description')->nullable();
+            $table->tinyInteger('is_popular')->default(0);
+            $table->tinyInteger('is_home_show')->default(0);
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

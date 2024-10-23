@@ -63,7 +63,7 @@ async function submit() {
       };
       userData.value = JSON.stringify(userSimplified); 
     }
-    navigateTo("admin");
+    navigateTo("/admin");
   }
 }
 

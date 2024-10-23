@@ -5,24 +5,24 @@ export default defineNuxtConfig({
   modules: ["@vuestic/nuxt", "@pinia/nuxt", "@nuxtjs/i18n"],
   vuestic: {
     config: {
-        colors: {
-          variables: {
-            primary: "#002c85",
-            secondary: "#002c85",
-            success: "#40e583",
-            info: "#2c82e0",
-            danger: "#e34b4a",
-            warning: "#ffc200",
-            gray: "#babfc2",
-            dark: "#34495e",
+      colors: {
+        variables: {
+          primary: "#002c85",
+          secondary: "#002c85",
+          success: "#40e583",
+          info: "#2c82e0",
+          danger: "#e34b4a",
+          warning: "#ffc200",
+          gray: "#babfc2",
+          dark: "#34495e",
 
-            // Custom colors
-            yourCustomColor: "#d0f55d",
-          },
+          // Custom colors
+          yourCustomColor: "#d0f55d",
         },
+      },
     },
   },
-  ssr: false,
+  target: 'static',
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -31,5 +31,6 @@ export default defineNuxtConfig({
   },
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css'
-    ]
+  ]
+
 })

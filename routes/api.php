@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,16 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
   Route::get('blogs', [BlogController::class, 'index']);
   Route::get('blogs/{slug}', [BlogController::class, 'show']);
   Route::post('blogs', [BlogController::class, 'store']);
-  Route::put('blogs/{id}', [BlogController::class, 'update']);
+  Route::post('blogs/{id}', [BlogController::class, 'update']);
+  Route::delete('blog/image/{id}', [BlogController::class, 'fileDelete']);
   Route::delete('blogs/{id}', [BlogController::class, 'destroy']);
 });
+
+
+
+//frontend route
+Route::get('/home', [HomeController::class, 'home']);
+Route::get('/category/{slug}', [HomeController::class, 'category']);
+Route::get('/category/latest-blog/{slug}', [HomeController::class, 'latestBlog']);
+Route::get('blogs', [HomeController::class, 'blogs']);
+Route::get('blog/{slug?}', [HomeController::class, 'blog']);

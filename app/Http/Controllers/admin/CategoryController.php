@@ -55,6 +55,11 @@ class CategoryController extends Controller
         $data['details'] = $request->post('details');
         $data['image'] = $request->post('image');
         $data['priority'] = $request->post('priority');
+        $data['is_home_show'] = $request->is_home_show ? 1 : 0 ;
+        $data['meta_title'] = $request->meta_title;
+        $data['meta_description'] = $request->meta_description ;
+        $data['is_popular'] = $request->is_popular ? 1 : 0 ;
+        $data['status'] = $request->status ? 1 :0 ;
         $category = Category::create($data);
 
         return response()->json(["success"=> true, 'category' => $category]);
@@ -83,6 +88,11 @@ class CategoryController extends Controller
         $data['subtitle'] = $request->post('subtitle');
         $data['details'] = $request->post('details');
         $data['priority'] = $request->post('priority');
+        $data['is_home_show'] = $request->is_home_show ? 1 : 0 ;
+        $data['meta_title'] = $request->meta_title;
+        $data['meta_description'] = $request->meta_description ;
+        $data['is_popular'] = $request->is_popular ? 1 : 0 ;
+        $data['status'] = $request->status ? 1 :0 ;
         $data['image'] = $request->post('image');
 
         $category->update($data);

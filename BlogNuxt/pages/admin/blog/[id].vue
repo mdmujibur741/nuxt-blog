@@ -28,17 +28,43 @@
             </select>
             <FormError v-if="errors" :errorInput="errors.category_id" />
             </div>
-    
+
             <div class="mb-3">
+              <VaInput type="text" v-model="form.meta_title" label="Meta Title" />
+              <FormError v-if="errors" :errorInput="errors.meta_title" />
+            </div>
+  
+            <div class="mb-3">
+              <VaInput type="text" v-model="form.meta_description" label="Meta description" />
+              <FormError v-if="errors" :errorInput="errors.meta_description" />
+            </div>
+  
+            <div class="mb-3">
+              <VaCheckbox v-model="form.is_popular" label="Is Popular"  />
+              <FormError v-if="errors" :errorInput="errors.is_popular" />
+            </div>
+  
+            <div class="mb-3">
+              <VaCheckbox v-model="form.is_home_show" label="Is Home"/>
+              <FormError v-if="errors" :errorInput="errors.priority" />
+            </div>
+  
+            <div class="mb-3">
+              <VaCheckbox v-model="form.status" label="Status"/>
+              <FormError v-if="errors" :errorInput="errors.status" />
+            </div>
+  
+    
+            <div class="mb-3 flex flex-wrap justify-between">
               <VaFileUpload v-model="form.image"  undo type="gallery" undo-duration="500" undo-button-text="undoButtonText"  deleted-file-message="deletedFileMessage" />
+              <div class="">
+                <h2 class="text-lg font-semibold">Exist Files</h2>
+                <div class="flex flex-wrap justify-between">
+                  <img v-for="img in blogData.blog?.blog_image" class="w-36 border shadow p-2 lg:mt-20" :key="img.id" :src="img.src" alt="">
+                </div>
+              </div>
             </div>
     
-            <div class="flex justify-end">
-                <p class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-end items-start">
-               <!-- <img v-for="img in blogData.blog?.blog_image" :key="img.id" :src="img.src" alt="">   -->
-<VaImage v-for="img in blogData.blog?.blog_image" :key="img.id" fit="cover" class="max-w-32 col-span-1 bg-gray-300" :src="img.src"/> 
-                </p>
-            </div>
 
           <div class="flex justify-end gap-3">
             <VaButton color="secondary" preset="secondary">Cancel</VaButton>
@@ -80,6 +106,11 @@ const form = reactive({
   description: "",
   priority: "",
   category_id : "",
+  meta_title : "",
+  meta_description : "",
+  is_popular : false,
+  is_home_show : false,
+  status : false,
   image: [],
 });
 
@@ -92,21 +123,47 @@ watchEffect(() => {
     form.description = blogData.value.blog.description || "";
     form.priority = blogData.value.blog.priority || "";
     form.category_id = blogData.value.blog?.category_id || "";
-    form.image = blogData.value.blog.image || [];
+    form.meta_title = blogData.value.blog?.meta_title || "";
+    form.meta_description = blogData.value.blog?.meta_description || "";
+    form.is_popular = blogData.value.blog?.is_popular ? true : false;
+    form.is_home_show = blogData.value.blog?.is_home_show ? true : false;
+    form.status = blogData.value.blog?.status ? true : false;
   }
 });
 
 async function submit() {
-  const { data, status, error } = await useApiFetch(`api/admin/blogs/${Id}`, {
-    method: "put",
-    body: form,
-  });
+
+
+  const formData = new FormData();
+  formData.append("title", form.title);
+  formData.append("subtitle", form.subtitle);
+  formData.append("description", form.description);
+  formData.append("priority", form.priority);
+  formData.append("category_id", form.category_id);
+  formData.append("is_popular", form.is_popular);
+  formData.append("is_home_show", form.is_home_show);
+  formData.append("status", form.status);
+  formData.append("meta_title", form.meta_title);
+  formData.append("meta_description", form.meta_description);
+
+  if (form.image.length > 0) {
+    form.image.forEach((file, index) => {
+      formData.append(`image[${index}]`, file);
+    });
+  }
+
+const { data, status, error } = await useApiFetch(`api/admin/blogs/${Id}`, {
+  method: "post",
+  body: formData, 
+});
+
+
 
   if (status.value === "error") {
     errors.value = error.value.data.errors;
   } else {
     notify("Blog Update Successfully");
-    navigateTo("/admin/blog");
+      navigateTo("/admin/blog");
   }
 }
 </script>

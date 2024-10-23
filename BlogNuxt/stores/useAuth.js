@@ -37,7 +37,7 @@ export const useAuthStore = defineStore("auth", () => {
             auth_token.value = null;
             userPermissions.value = null;
             userRoles.value = null;
-            userCookie.value = null;
+            userCookie = null;
         }
         navigateTo("/login");
     }

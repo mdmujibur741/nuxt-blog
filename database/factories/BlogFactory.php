@@ -19,6 +19,9 @@ class BlogFactory extends Factory
     {
         $categoryId =  $this->faker->randomElement([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
         $title = $this->faker->sentence;
+        $popular = $this->faker->randomElement([0, 1]);
+        $status = $this->faker->randomElement([0, 1]);
+        $is_home = $this->faker->randomElement([0, 1]);
         return [
             'title'=> $title,
              'subtitle'=>  $title.  "subtitle",
@@ -26,6 +29,11 @@ class BlogFactory extends Factory
              'description'=>  $this->faker->paragraph,
              'priority' => rand(20, 200),
              'category_id' => $categoryId,
+             'meta_title' => $title,
+            'meta_description' => $title, 
+            'is_popular' => $popular,
+            'is_home_show' => $is_home,
+            'status' => $status,
         ];
     }
 }

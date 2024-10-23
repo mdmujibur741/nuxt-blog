@@ -10,7 +10,7 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'subtitle', 'slug', 'description', 'priority', 'category_id'];
+    protected $fillable = ['title', 'subtitle', 'slug', 'description', 'priority', 'category_id', 'is_home_show', 'meta_title', 'meta_description', 'is_popular', 'status'];
 
     public function blogImage() : HasMany
     {
